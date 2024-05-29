@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Information</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        h1 { color: #333; }
+        p { font-size: 18px; }
+    </style>
+</head>
+<body>
+    <h1>QR Code Information</h1>
+    <p><strong>Child's Name:</strong> <span id="child_name"></span></p>
+    <p><strong>Date of Birth:</strong> <span id="dob"></span></p>
+    <p><strong>Contacts:</strong></p>
+    <div id="contacts"></div>
+    <p><strong>Allergies:</strong> <span id="allergies"></span></p>
+    <p><strong>Password:</strong> <span id="password"></span></p>
+
+    <h2>Privacy Notice</h2>
+    <p>This page collects and displays personal information for the purpose of demonstrating QR code functionality. By scanning the QR code, you consent to the collection and use of this data as described. Your data will be stored securely and you have the right to access and request the deletion of your data at any time.</p>
+
+    <script>
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                child_name: params.get('child_name') || '',
+                dob: params.get('dob') || '',
+                contacts: params.get('contacts') || '',
+                allergies: params.get('allergies') || '',
+                password: params.get('password') || ''
+            };
+        }
+
+        function displayInformation() {
+            const params = getQueryParams();
+            document.getElementById('child_name').innerText = params.child_name;
+            document.getElementById('dob').innerText = params.dob;
+
+            const contactsDiv = document.getElementById('contacts');
+            const contacts = params.contacts.split(', ');
+            contacts.forEach(contact => {
+                const contactElement = document.createElement('p');
+                contactElement.innerText = contact;
+                contactsDiv.appendChild(contactElement);
+            });
+
+            document.getElementById('allergies').innerText = params.allergies;
+            document.getElementById('password').innerText = params.password;
+        }
+
+        displayInformation();
+    </script>
+</body>
+</html>
